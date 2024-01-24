@@ -3,34 +3,61 @@ if exists("b:dovish_ftplugin")
   finish
 endif
 let b:dovish_ftplugin = 1
+let g:operating_system = ""
+
+if has('win32') || has('win64')
+	let g:operating_system = "Windows"
+elseif has('macunix')
+	let g:operating_system = "MacOS"
+endif
 
 if !exists('g:DovishCopyFile')
   function! g:DovishCopyFile(target, destination) abort
-    return 'cp ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  if g:operating_system == "MacOS"
+		  return 'cp ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  else
+		  return 'copy ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  endif
   endfunction
 end
 
 if !exists('g:DovishCopyDirectory')
   function! g:DovishCopyDirectory(target, destination) abort
-    return 'cp -r ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  if g:operating_system == "MacOS"
+		  return 'cp -r ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  else
+		  return 'copy ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  endif
   endfunction
 end
 
 if !exists('g:DovishMove')
   function! g:DovishMove(target, destination) abort
-    return 'mv ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  if g:operating_system == "MacOS"
+		  return 'mv ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  else
+		  return 'move ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  endif
   endfunction
 end
 
 if !exists('g:DovishDelete')
   function! g:DovishDelete(target) abort
-    return 'trash ' . shellescape(a:target)
+	  if g:operating_system == "MacOS"
+		  return 'rm ' . shellescape(a:target)
+	  else
+		  return 'del ' . shellescape(a:target)
+	  endif
   endfunction
 end
 
 if !exists('g:DovishRename')
   function! g:DovishRename(target, destination) abort
-    return 'mv ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  if g:operating_system == "MacOS"
+		  return 'mv ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  else
+		  return 'move ' . shellescape(a:target) . ' ' . shellescape(a:destination)
+	  endif
   endfunction
 end
 
