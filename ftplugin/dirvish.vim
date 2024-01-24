@@ -316,10 +316,10 @@ endif
 
 if g:dirvish_dovish_map_keys
   if !hasmapto('<Plug>(dovish_create_file)', 'n')
-    execute 'nmap <silent><buffer> a <Plug>(dovish_create_file)'
+    execute 'nmap <silent><buffer> new <Plug>(dovish_create_file)'
   endif
   if !hasmapto('<Plug>(dovish_create_directory)', 'n')
-    execute 'nmap <silent><buffer> A <Plug>(dovish_create_directory)'
+    execute 'nmap <silent><buffer> dir <Plug>(dovish_create_directory)'
   endif
   if !hasmapto('<Plug>(dovish_delete)', 'n')
     execute 'nmap <silent><buffer> dd <Plug>(dovish_delete)'
