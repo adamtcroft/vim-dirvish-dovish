@@ -44,9 +44,17 @@ end
 if !exists('g:DovishDelete')
   function! g:DovishDelete(target) abort
 	  if g:operating_system == "MacOS"
-		  return 'rm ' . shellescape(a:target)
+		  if isdirectory(a:target)
+			  return 'rm -r ' . shellescape(a:target)
+		  else
+			return 'rm ' . shellescape(a:target)
+		endif
 	  else
-		  return 'del ' . shellescape(a:target)
+		  if isdirectory(a:target)
+			  return 'rmdir ' . shellescape(a:target)
+		  else
+			  return 'del ' . shellescape(a:target)
+		  endif
 	  endif
   endfunction
 end
@@ -316,27 +324,27 @@ endif
 
 if g:dirvish_dovish_map_keys
   if !hasmapto('<Plug>(dovish_create_file)', 'n')
-    execute 'nmap <silent><buffer> new <Plug>(dovish_create_file)'
+    execute 'nmap <silent><buffer> <leader>touch <Plug>(dovish_create_file)'
   endif
   if !hasmapto('<Plug>(dovish_create_directory)', 'n')
-    execute 'nmap <silent><buffer> dir <Plug>(dovish_create_directory)'
+    execute 'nmap <silent><buffer> <leader>mkdir <Plug>(dovish_create_directory)'
   endif
   if !hasmapto('<Plug>(dovish_delete)', 'n')
-    execute 'nmap <silent><buffer> dd <Plug>(dovish_delete)'
+    execute 'nmap <silent><buffer> <leader>del <Plug>(dovish_delete)'
   endif
   if !hasmapto('<Plug>(dovish_rename)', 'n')
-    execute 'nmap <silent><buffer> r <Plug>(dovish_rename)'
+    execute 'nmap <silent><buffer> <leader>ren <Plug>(dovish_rename)'
   endif
   if !hasmapto('<Plug>(dovish_yank)', 'n')
-    execute 'nmap <silent><buffer> yy <Plug>(dovish_yank)'
+    execute 'nmap <silent><buffer> <leader>yy <Plug>(dovish_yank)'
   endif
   if !hasmapto('<Plug>(dovish_yank)', 'v')
     execute 'xmap <silent><buffer> yy <Plug>(dovish_yank)'
   endif
   if !hasmapto('<Plug>(dovish_copy)', 'n')
-    execute 'nmap <silent><buffer> pp <Plug>(dovish_copy)'
+    execute 'nmap <silent><buffer> <leader>cp <Plug>(dovish_copy)'
   endif
   if !hasmapto('<Plug>(dovish_move)', 'n')
-    execute 'nmap <silent><buffer> PP <Plug>(dovish_move)'
+    execute 'nmap <silent><buffer> <leader>pp <Plug>(dovish_move)'
   endif
 endif
